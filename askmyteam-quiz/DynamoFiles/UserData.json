@@ -1,0 +1,38 @@
+[
+    {
+        "adminID" : 1,
+        "name" : "SuperAdmin",
+        "info" : {
+            "organisationName" : "AskYourTeam",
+            "password" : "Pa$$word"
+        }
+    },
+
+    {
+    "adminID" : 2,
+    "name" : "Harold",
+    "info" : {
+        "organisationName" : "E.I.T. School of Computing",
+        "password" : "Pa$$word"
+        }
+    },
+
+    {
+        "adminID" : 3,
+        "name" : "1337SuperITMan",
+        "info" : {
+            "organisationName" : "E.I.T. School of Computing",
+            "password" : "Pa$$word"
+        }
+    },
+
+    {
+        "adminID" : 4,
+        "name" : "TheLastTesterID",
+        "info" : {
+            "organisationName" : "FakeCorp",
+            "password" : "Pa$$word"
+            }
+    }
+
+]
