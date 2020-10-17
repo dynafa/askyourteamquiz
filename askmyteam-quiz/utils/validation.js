@@ -1,4 +1,4 @@
-const validator = require('validator');
+const validator = require('node-validator');
 
 const userQueries = require('../queries/userQueries');
 
