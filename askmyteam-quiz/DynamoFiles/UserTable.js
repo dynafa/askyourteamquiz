@@ -13,7 +13,8 @@ var params = {
     TableName : "ADMIN_USER",
     KeySchema: [       
         { AttributeName: "adminID", KeyType: "HASH"},  //Partition key
-        { AttributeName: "name", KeyType: "RANGE" }
+        { AttributeName: "name", KeyType: "RANGE" },
+        { }
     ],
     AttributeDefinitions: [       
         { AttributeName: "adminID", AttributeType: "N" },

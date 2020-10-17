@@ -86,6 +86,7 @@ module.exports.list = (event, context, callback) => {
 
 };
 
+// get a user from the database by name
 module.exports.get = (event, context, callback) => {
   const params = {
     TableName: process.env.USERTABLE,
@@ -104,7 +105,75 @@ module.exports.get = (event, context, callback) => {
     })
     .catch(error => {
       console.error(error);
-      callback(new Error('Couldn\'t fetch candidate.'));
+      callback(new Error('Couldn\'t fetch user.'));
       return;
     });
 };
+
+// get all the users from the database
+module.exports.list = (event, context, callback) => {
+  var params ={
+    TableName: process.env.USERTABLE,
+    ProjectionExpression: "adminID, name, organisationName"
+  };
+
+  console.log("Scanning User Table");
+  const onScan = (err, data) => {
+    if (err) {
+      console.log('Scan failed on data loading. Error JSON', JSON.stringify(err, null, 2));
+      callback(err);
+    } else {
+      console.log("Successful scan");
+      return callback(null, {
+        statusCode: 200,
+        body: JSON.stringify(result.Items),
+      });
+    }
+  };
+  dynamoDb.scan(params, onScan);
+};
+
+// delete a user by name
+module.exports.delete = (event, context, callback) => {
+  const params = {
+    TableName: process.env.USERTABLE,
+    Key: {
+      name: event.pathParameters.name,
+    },
+  };
+
+  // delete the user from the database
+  dynamoDb.delete(params, (error) => {
+    //handle errors
+    if (error) {
+      console.error(error);
+      callback(null, {
+        statusCode: error.statusCode || 501,
+        headers: { 'Content-Type': 'text/plain' },
+        body: 'Couldn\'t remove the user.',
+      });
+      return;
+  }
+  // the response
+  const response = {
+    statusCode: 200,
+    body: JSON.stringify({}),
+  };
+  callback(null, response);
+  });
+};
+
+// update a users details via id
+module.exports.update = (event, context, callback) => {
+  const data = JSON.parse(event.body);
+
+  const params = {
+    Table: process.env.USERTABLE,
+    Key: {
+      id: event.pathParameters.id,
+    },
+    ExpressionAttributeNames: {
+
+    }
+  }
+}
