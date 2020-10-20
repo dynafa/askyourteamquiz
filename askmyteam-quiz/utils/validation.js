@@ -18,9 +18,7 @@ const userValidationRules = (req, res, next) => {
     // password must be at least 5 characters
     body('password')
       .isLength({ min: 5 })
-      .withMessage('Password must be at least 5 characters long'),
-    // phone number must be numeric
-    
+      .withMessage('Password must be at least 5 characters long')
   ];
 };
 
