@@ -1,0 +1,9 @@
+dev:
+  DYNAMODB_ADMIN_USER: "AdminUser"
+  DYNAMODB_QUESTION_TABLE: "QuestionTable"
+  DYNAMODB_DEMO_QUESTION_TABLE: "DemoQuestionTable"
+  DYNAMODB_QUIZ: "Quiz"
+  DYNAMODB_USER: "User"
+  DYNAMODB_RESPONSE: "Response"
+  DYNAMODB_DEMO_RESPONSE: "DemoResponse"
+

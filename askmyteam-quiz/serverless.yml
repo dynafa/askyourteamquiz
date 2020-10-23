@@ -259,7 +259,7 @@ functions:
     events:
       -http:
         path: user
-        method: create
+        method: post
   getUsers:
     handler: api/user.list
     memorySize: 128
@@ -326,4 +326,147 @@ functions:
 #     NewOutput:
 #       Description: "Description for the output"
 #       Value: "Some output value"
+DynamoDBIamPolicyAdmin:
+      Type: AWS::IAM::Policy
+      DependsOn: DynamoDbTableAdmin
+      Properties:
+        PolicyName: lambda-dynamodb-orgs
+        PolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+            - Effect: Allow
+              Action:
+                - dynamodb:Query
+                - dynamodb:Scan
+                - dynamodb:GetItem
+                - dynamodb:PutItem
+                - dynamodb:UpdateItem
+                - dynamodb:DeleteItem
+              Resource: arn:aws:dynamodb:*:*:table/AdminUser
+        Roles:
+          - Ref: IamRoleLambdaExecution
+DynamoDBIamPolicyQuestion:
+      Type: AWS::IAM::Policy
+      DependsOn: DynamoDbTableQuestion
+      Properties:
+        PolicyName: lambda-dynamodb-users
+        PolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+            - Effect: Allow
+              Action:
+                - dynamodb:Query
+                - dynamodb:Scan
+                - dynamodb:GetItem
+                - dynamodb:PutItem
+                - dynamodb:UpdateItem
+                - dynamodb:DeleteItem
+              Resource: arn:aws:dynamodb:*:*:table/QuestionTable
+        Roles:
+          - Ref: IamRoleLambdaExecution
+DynamoDBIamPolicyDemoQuestion:
+      Type: AWS::IAM::Policy
+      DependsOn: DynamoDbTableUsers
+      Properties:
+        PolicyName: lambda-dynamodb-users
+        PolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+            - Effect: Allow
+              Action:
+                - dynamodb:Query
+                - dynamodb:Scan
+                - dynamodb:GetItem
+                - dynamodb:PutItem
+                - dynamodb:UpdateItem
+                - dynamodb:DeleteItem
+              Resource: arn:aws:dynamodb:*:*:table/DemoQuestionTable
+        Roles:
+          - Ref: IamRoleLambdaExecution
+DynamoDBIamPolicyQuiz:
+      Type: AWS::IAM::Policy
+      DependsOn: DynamoDbTableQuiz
+      Properties:
+        PolicyName: lambda-dynamodb-users
+        PolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+            - Effect: Allow
+              Action:
+                - dynamodb:Query
+                - dynamodb:Scan
+                - dynamodb:GetItem
+                - dynamodb:PutItem
+                - dynamodb:UpdateItem
+                - dynamodb:DeleteItem
+              Resource: arn:aws:dynamodb:*:*:table/Quiz
+        Roles:
+          - Ref: IamRoleLambdaExecution
+DynamoDBIamPolicyUser:
+      Type: AWS::IAM::Policy
+      DependsOn: DynamoDbTableUser
+      Properties:
+        PolicyName: lambda-dynamodb-users
+        PolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+            - Effect: Allow
+              Action:
+                - dynamodb:Query
+                - dynamodb:Scan
+                - dynamodb:GetItem
+                - dynamodb:PutItem
+                - dynamodb:UpdateItem
+                - dynamodb:DeleteItem
+              Resource: arn:aws:dynamodb:*:*:table/User
+        Roles:
+          - Ref: IamRoleLambdaExecution
+DynamoDBIamPolicyResponse:
+      Type: AWS::IAM::Policy
+      DependsOn: DynamoDbTableResponse
+      Properties:
+        PolicyName: lambda-dynamodb-users
+        PolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+            - Effect: Allow
+              Action:
+                - dynamodb:Query
+                - dynamodb:Scan
+                - dynamodb:GetItem
+                - dynamodb:PutItem
+                - dynamodb:UpdateItem
+                - dynamodb:DeleteItem
+              Resource: arn:aws:dynamodb:*:*:table/Response
+        Roles:
+          - Ref: IamRoleLambdaExecution
+DynamoDBIamPolicyDemoResponse:
+      Type: AWS::IAM::Policy
+      DependsOn: DynamoDbTableDemoResponse
+      Properties:
+        PolicyName: lambda-dynamodb-users
+        PolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+            - Effect: Allow
+              Action:
+                - dynamodb:Query
+                - dynamodb:Scan
+                - dynamodb:GetItem
+                - dynamodb:PutItem
+                - dynamodb:UpdateItem
+                - dynamodb:DeleteItem
+              Resource: arn:aws:dynamodb:*:*:table/DemoResponse
+        Roles:
+          - Ref: IamRoleLambdaExecution
+        
 
+        
+
+        
+
+        
+
+        
+
+ 
