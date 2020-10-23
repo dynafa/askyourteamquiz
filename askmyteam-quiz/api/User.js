@@ -42,7 +42,7 @@ module.exports.create = (event, context, callback) => {
 const createUser = user => {
   console.log('Submitting User');
   const userInfo = {
-    TableName: process.env.USERTABLE,
+    TableName: process.env.DYNAMODB_ADMIN_USER,
     Item: user,
   };
   return dynamoDb.create(userInfo).promise()
@@ -60,7 +60,7 @@ const userInfo = (name, organisationName, password) => {
 
 module.exports.list = (event, context, callback) => {
   var params = {
-      TableName: process.env.USERTABLE,
+      TableName: process.env.DYNAMODB_ADMIN_USER,
       ProjectionExpression: "id, name, organisationName"
   };
 
@@ -89,7 +89,7 @@ module.exports.list = (event, context, callback) => {
 // get a user from the database by name
 module.exports.get = (event, context, callback) => {
   const params = {
-    TableName: process.env.USERTABLE,
+    TableName: process.env.DYNAMODB_ADMIN_USER,
     Key: {
       name: event.pathParameters.name,
     },
@@ -113,7 +113,7 @@ module.exports.get = (event, context, callback) => {
 // get all the users from the database
 module.exports.list = (event, context, callback) => {
   var params ={
-    TableName: process.env.USERTABLE,
+    TableName: process.env.DYNAMODB_ADMIN_USER,
     ProjectionExpression: "adminID, name, organisationName"
   };
 
@@ -136,7 +136,7 @@ module.exports.list = (event, context, callback) => {
 // delete a user by name
 module.exports.delete = (event, context, callback) => {
   const params = {
-    TableName: process.env.USERTABLE,
+    TableName: process.env.DYNAMODB_ADMIN_USER,
     Key: {
       name: event.pathParameters.name,
     },
@@ -168,7 +168,7 @@ module.exports.update = (event, context, callback) => {
   const data = JSON.parse(event.body);
 
   const params = {
-    Table: process.env.USERTABLE,
+    Table: process.env.DYNAMODB_ADMIN_USER,
     Key: {
       id: event.pathParameters.id,
     },

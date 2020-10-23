@@ -1,12 +1,12 @@
 const bcrypt = require('bcryptjs');
 
-//@desc     Creates an encripted password
+//@desc     Creates an encrypted password
 const encryptPass = async (password) => {
   return new Promise(async (resolve, reject) => {
     try {
       const salt = await bcrypt.genSalt(10);
-      const encriptedPass = await bcrypt.hash(password, salt);
-      resolve(encriptedPass);
+      const encryptedPass = await bcrypt.hash(password, salt);
+      resolve(encryptedPass);
     } catch (e) {
       reject(e);
     }

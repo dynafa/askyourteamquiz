@@ -25,6 +25,14 @@ provider:
   runtime: nodejs12.x
   stage: dev
   region: us-east-1
+  environment:
+    DYNAMODB_ADMIN_USER: ${file(./params.yml):${opt:stage, self:provider.stage, 'dev'}.DYNAMODB_ADMIN_USER}
+    DYNAMODB_QUESTION_TABLE: ${file(./params.yml):${opt:stage, self:provider.stage, 'dev'}.DYNAMODB_QUESTION_TABLE}
+    DYNAMODB_DEMO_QUESTION_TABLE: ${file(./params.yml):${opt:stage, self:provider.stage, 'dev'}.DYNAMODB_DEMO_QUESTION_TABLE}
+    DYNAMODB_QUIZ: ${file(./params.yml):${opt:stage, self:provider.stage, 'dev'}.DYNAMODB_QUIZ}
+    DYNAMODB_USER: ${file(./params.yml):${opt:stage, self:provider.stage, 'dev'}.DYNAMODB_USER}
+    DYNAMODB_RESPONSE: ${file(./params.yml):${opt:stage, self:provider.stage, 'dev'}.DYNAMODB_RESPONSE}
+    DYNAMODB_DEMO_RESPONSE: ${file(./params.yml):${opt:stage, self:provider.stage, 'dev'}.DYNAMODB_DEMO_RESPONSE}
 
 # you can overwrite defaults here
 #  stage: dev
@@ -40,12 +48,68 @@ iamRoleStatements:
         - dynamodb:PutItem
         - dynamodb:UpdateItem
         - dynamodb:DeleteItem
-      Resource: "*"
+      Resource: "arn:aws:dynamodb:ap-southeast-2:436545416660:table/AdminUser"
+    - Effect: "Allow"
+      Action:
+        - dynamodb:Query
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+      Resource: "arn:aws:dynamodb:ap-southeast-2:436545416660:table/QuestionTable"
+    - Effect: "Allow"
+      Action:
+        - dynamodb:Query
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+      Resource: "arn:aws:dynamodb:ap-southeast-2:436545416660:table/DemoQuestionTable"
+    - Effect: "Allow"
+      Action:
+        - dynamodb:Query
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+      Resource: "arn:aws:dynamodb:ap-southeast-2:436545416660:table/Quiz"
+    - Effect: "Allow"
+      Action:
+        - dynamodb:Query
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+      Resource: "arn:aws:dynamodb:ap-southeast-2:436545416660:table/User"
+    - Effect: "Allow"
+      Action:
+        - dynamodb:Query
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+      Resource: "arn:aws:dynamodb:ap-southeast-2:436545416660:table/Response"
+    - Effect: "Allow"
+      Action:
+        - dynamodb:Query
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+      Resource: "arn:aws:dynamodb:ap-southeast-2:436545416660:table/DemoResponse"  
+
+
 
 resources:
   Resources:
-    UserTableDynamoDbTable:
-      Type: 'AWS::DynamoDB::Table'
+    DynamoDbTableAdminUser:
+      Type: AWS::DynamoDB::Table
       DeletionPolicy: Retain
       Properties:
         AttributeDefinitions:
@@ -61,7 +125,117 @@ resources:
           WriteCapacityUnits: 1
         StreamSpecification:
           StreamViewType: "NEW_AND_OLD_IMAGES"
-        TableName: ${self:provider.environment.UserTable} 
+        TableName: ${self:provider.environment.AdminUser}
+    DynamoDbTableQuestionTable:
+      Type: AWS::DynamoDB::Table
+      DeletionPolicy: Retain
+      Properties:
+        AttributeDefinitions:
+          - 
+            AttributeName: "Quiz_ID"
+            AttributeType: "S"
+        KeySchema:
+          -
+            AttributeName: "Question_ID"
+            KeyType: "HASH"
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+        StreamSpecification:
+          StreamViewType: "NEW_AND_OLD_IMAGES"
+        TableName: ${self:provider.environment.QuestionTable}  
+    DynamoDbTableDemoQuestionTable:
+      Type: AWS::DynamoDB::Table
+      DeletionPolicy: Retain
+      Properties:
+        AttributeDefinitions:
+          - 
+            AttributeName: "Quiz_ID"
+            AttributeType: "S"
+        KeySchema:
+          -
+            AttributeName: "Question_ID"
+            KeyType: "HASH"
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+        StreamSpecification:
+          StreamViewType: "NEW_AND_OLD_IMAGES"
+        TableName: ${self:provider.environment.DemoQuestionTable}
+    DynamoDbTableQuiz:
+      Type: AWS::DynamoDB::Table
+      DeletionPolicy: Retain
+      Properties:
+        AttributeDefinitions:
+          - 
+            AttributeName: "Quiz_ID"
+            AttributeType: "S"
+        KeySchema:
+          -
+            AttributeName: "Question_ID"
+            KeyType: "HASH"
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+        StreamSpecification:
+          StreamViewType: "NEW_AND_OLD_IMAGES"
+        TableName: ${self:provider.environment.Quiz}
+    DynamoDbTableUser:
+      Type: AWS::DynamoDB::Table
+      DeletionPolicy: Retain
+      Properties:
+        AttributeDefinitions:
+          - 
+            AttributeName: "Email"
+            AttributeType: "S"
+        KeySchema:
+          -
+            AttributeName: "User_ID"
+            KeyType: "HASH"
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+        StreamSpecification:
+          StreamViewType: "NEW_AND_OLD_IMAGES"
+        TableName: ${self:provider.environment.User}
+    DynamoDbTableResponse:
+      Type: AWS::DynamoDB::Table
+      DeletionPolicy: Retain
+      Properties:
+        AttributeDefinitions:
+          - 
+            AttributeName: "QuizUser_ID"
+            AttributeType: "S"
+        KeySchema:
+          -
+            AttributeName: "Question_ID"
+            KeyType: "HASH"
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+        StreamSpecification:
+          StreamViewType: "NEW_AND_OLD_IMAGES"
+        TableName: ${self:provider.environment.Response}
+    DynamoDbTableDemoResponse:
+      Type: AWS::DynamoDB::Table
+      DeletionPolicy: Retain
+      Properties:
+        AttributeDefinitions:
+          - 
+            AttributeName: "QuizUser_ID"
+            AttributeType: "S"
+        KeySchema:
+          -
+            AttributeName: "Question_ID"
+            KeyType: "HASH"
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+        StreamSpecification:
+          StreamViewType: "NEW_AND_OLD_IMAGES"
+        TableName: ${self:provider.environment.DemoResponse}
+
+
    
 
 # you can define service wide environment variables here
@@ -152,3 +326,4 @@ functions:
 #     NewOutput:
 #       Description: "Description for the output"
 #       Value: "Some output value"
+

@@ -45,7 +45,7 @@ module.exports.create = (event, context, callback) => {
 const createQuestion = question => {
   console.log('Submitting Question');
   const userInfo = {
-    TableName: process.env.QUESTION,
+    TableName: process.env.DYNAMODB_QUESTION_TABLE,
     Item: question,
   };
   return dynamoDb.create(questionInfo).promise()
@@ -65,7 +65,7 @@ const questionInfo = (name, organisationName, password) => {
 
 module.exports.list = (event, context, callback) => {
   var params = {
-      TableName: process.env.QUESTION,
+      TableName: process.env.DYNAMODB_QUESTION_TABLE,
       ProjectionExpression: "question_ID, quiz_ID, question_body, question_choice_type, question_choices, question_correct_answer"
   };
 
@@ -94,7 +94,7 @@ module.exports.list = (event, context, callback) => {
 // get question by question_id
 module.exports.get = (event, context, callback) => {
   const params = {
-    TableName: process.env.QUESTION,
+    TableName: process.env.DYNAMODB_QUESTION_TABLE,
     Key: {
       question_ID: event.pathParameters.question_ID,
     },
@@ -118,7 +118,7 @@ module.exports.get = (event, context, callback) => {
 // get all questions by quiz_ID
 module.exports.list = (event, context, callback) => {
     var params ={
-      TableName: process.env.QUESTION,
+      TableName: process.env.DYNAMODB_QUESTION_TABLE,
       Key: {
           quiz_ID: event.pathParameters.quiz_ID,
       },
