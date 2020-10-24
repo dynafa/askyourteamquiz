@@ -48,7 +48,8 @@ iamRoleStatements:
         - dynamodb:PutItem
         - dynamodb:UpdateItem
         - dynamodb:DeleteItem
-      Resource: "arn:aws:dynamodb:ap-southeast-2:436545416660:table/AdminUser"
+      Resource: "arn:aws:dynamodb:us-west-2:436545416660:table/AdminUser
+"
     - Effect: "Allow"
       Action:
         - dynamodb:Query
@@ -57,7 +58,7 @@ iamRoleStatements:
         - dynamodb:PutItem
         - dynamodb:UpdateItem
         - dynamodb:DeleteItem
-      Resource: "arn:aws:dynamodb:ap-southeast-2:436545416660:table/QuestionTable"
+      Resource: "arn:aws:dynamodb:us-west-2:436545416660:table/QuestionTable"
     - Effect: "Allow"
       Action:
         - dynamodb:Query
@@ -66,7 +67,7 @@ iamRoleStatements:
         - dynamodb:PutItem
         - dynamodb:UpdateItem
         - dynamodb:DeleteItem
-      Resource: "arn:aws:dynamodb:ap-southeast-2:436545416660:table/DemoQuestionTable"
+      Resource: "arn:aws:dynamodb:us-west-2:436545416660:table/DemoQuestionTable"
     - Effect: "Allow"
       Action:
         - dynamodb:Query
@@ -75,7 +76,7 @@ iamRoleStatements:
         - dynamodb:PutItem
         - dynamodb:UpdateItem
         - dynamodb:DeleteItem
-      Resource: "arn:aws:dynamodb:ap-southeast-2:436545416660:table/Quiz"
+      Resource: "arn:aws:dynamodb:us-west-2:436545416660:table/Quiz"
     - Effect: "Allow"
       Action:
         - dynamodb:Query
@@ -84,7 +85,7 @@ iamRoleStatements:
         - dynamodb:PutItem
         - dynamodb:UpdateItem
         - dynamodb:DeleteItem
-      Resource: "arn:aws:dynamodb:ap-southeast-2:436545416660:table/User"
+      Resource: "arn:aws:dynamodb:us-west-2:436545416660:table/User"
     - Effect: "Allow"
       Action:
         - dynamodb:Query
@@ -93,7 +94,7 @@ iamRoleStatements:
         - dynamodb:PutItem
         - dynamodb:UpdateItem
         - dynamodb:DeleteItem
-      Resource: "arn:aws:dynamodb:ap-southeast-2:436545416660:table/Response"
+      Resource: "arn:aws:dynamodb:us-west-2:436545416660:table/Response"
     - Effect: "Allow"
       Action:
         - dynamodb:Query
@@ -102,7 +103,7 @@ iamRoleStatements:
         - dynamodb:PutItem
         - dynamodb:UpdateItem
         - dynamodb:DeleteItem
-      Resource: "arn:aws:dynamodb:ap-southeast-2:436545416660:table/DemoResponse"  
+      Resource: "arn:aws:dynamodb:us-west-2:436545416660:table/DemoResponse"  
 
 
 
@@ -326,11 +327,13 @@ functions:
 #     NewOutput:
 #       Description: "Description for the output"
 #       Value: "Some output value"
+resources:
+  Resources:
 DynamoDBIamPolicyAdmin:
       Type: AWS::IAM::Policy
       DependsOn: DynamoDbTableAdmin
       Properties:
-        PolicyName: lambda-dynamodb-orgs
+        PolicyName: lambda-dynamodb-adminuser
         PolicyDocument:
           Version: '2012-10-17'
           Statement:
